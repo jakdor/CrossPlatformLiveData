@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Jakub Dorda</Authors>
+    <Description>CrossPlatformLiveData - Android Jetpack LiveData inspired cross platform implementation for Xamarin</Description>
   </PropertyGroup>
 
   <ItemGroup>
