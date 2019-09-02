@@ -15,6 +15,7 @@ namespace CrossPlatformLiveData
         private readonly BehaviorSubject<T> _subject;
         private readonly IRxSchedulersFacade _rxSchedulers = new RxSchedulersFacade();
         private readonly bool _reEmitOnLifecycleFlag;
+        private readonly bool _allowDuplicatesInSequenceFlag;
         private T _lastEmitted;
 
         public T Value { get; private set; }
@@ -22,10 +23,14 @@ namespace CrossPlatformLiveData
         /// <summary>
         /// First emitted value will be type default
         /// </summary>
-        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume</param>
-        public CustomLiveData(bool reEmitOnLifecycle = false)
+        /// <param name="allowDuplicatesInSequence">If set emitting the same value one after another is allowed,
+        /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
+        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
+        /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
+        public CustomLiveData(bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
         {
             _subject = new BehaviorSubject<T>(default(T));
+            _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
             _reEmitOnLifecycleFlag = reEmitOnLifecycle;
         }
 
@@ -33,10 +38,14 @@ namespace CrossPlatformLiveData
         /// Emit first value with provided default
         /// </summary>
         /// <param name="initValue">Initial emitted value</param>
-        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume</param>
-        public CustomLiveData(T initValue, bool reEmitOnLifecycle = false)
+        /// <param name="allowDuplicatesInSequence">If set emitting the same value one after another is allowed,
+        /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
+        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
+        /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
+        public CustomLiveData(T initValue, bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
         {
             _subject = new BehaviorSubject<T>(initValue);
+            _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
             _reEmitOnLifecycleFlag = reEmitOnLifecycle;
         }
 
@@ -45,11 +54,16 @@ namespace CrossPlatformLiveData
         /// </summary>
         /// <param name="initValue">Initial emitted value</param>
         /// <param name="rxSchedulers">Use custom IRxSchedulersFacade implementation</param>
-        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume</param>
-        public CustomLiveData(T initValue, IRxSchedulersFacade rxSchedulers, bool reEmitOnLifecycle = false)
+        /// <param name="allowDuplicatesInSequence">If set emitting the same value one after another is allowed,
+        /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
+        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
+        /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
+        public CustomLiveData(T initValue, IRxSchedulersFacade rxSchedulers,
+            bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
         {
             _subject = new BehaviorSubject<T>(initValue);
             _rxSchedulers = rxSchedulers;
+            _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
             _reEmitOnLifecycleFlag = reEmitOnLifecycle;
         }
 
@@ -63,8 +77,7 @@ namespace CrossPlatformLiveData
         }
 
         /// <summary>
-        /// Subscribes to LiveData,
-        /// if reEmitOnLifecycle is false only emits new value if not equal to last one
+        /// Subscribes to LiveData
         /// </summary>
         /// <param name="onNext">Emits only non null objects</param>
         /// <param name="onError"></param>
@@ -83,11 +96,23 @@ namespace CrossPlatformLiveData
                     }
                     else
                     {
-                        if (obj != null && !obj.Equals(_lastEmitted))
+                        if (_allowDuplicatesInSequenceFlag)
                         {
-                            Value = obj;
-                            onNext.Invoke(obj);
+                            if (obj != null)
+                            {
+                                Value = obj;
+                                onNext.Invoke(obj);
+                            }
                         }
+                        else
+                        {
+                            if (obj != null && !obj.Equals(_lastEmitted))
+                            {
+                                Value = obj;
+                                onNext.Invoke(obj);
+                            }
+                        }
+
                         _lastEmitted = obj;
                     }
                 }, onError, onCompleted);

@@ -2,6 +2,10 @@
 
 namespace CrossPlatformLiveData.Internal.Model
 {
+    /// <summary>
+    /// Used internally as observer storage model
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class InternalObserverHolder<T> : IInternalObserverHolder
     {
         public ICustomLiveData<T> LifeData { get; set; }
