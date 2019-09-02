@@ -39,7 +39,20 @@ namespace CrossPlatformLiveData
             _subject = new BehaviorSubject<T>(initValue);
             _reEmitOnLifecycleFlag = reEmitOnLifecycle;
         }
-        
+
+        /// <summary>
+        /// Emit first value with provided default
+        /// </summary>
+        /// <param name="initValue">Initial emitted value</param>
+        /// <param name="rxSchedulers">Use custom IRxSchedulersFacade implementation</param>
+        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume</param>
+        public CustomLiveData(T initValue, IRxSchedulersFacade rxSchedulers, bool reEmitOnLifecycle = false)
+        {
+            _subject = new BehaviorSubject<T>(initValue);
+            _rxSchedulers = rxSchedulers;
+            _reEmitOnLifecycleFlag = reEmitOnLifecycle;
+        }
+
         /// <summary>
         /// Post new value asynchronously
         /// </summary>

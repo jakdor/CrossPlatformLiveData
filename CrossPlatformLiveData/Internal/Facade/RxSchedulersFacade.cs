@@ -4,13 +4,13 @@ using System.Threading;
 namespace CrossPlatformLiveData.Internal.Facade
 {
     /// <summary>
-    /// Facade for changing Schedulers during testing
-    /// Naming scheme consistent with global ReactiveX conventions
+    /// <inheritdoc cref="IRxSchedulersFacade"/>
     /// </summary>
     internal class RxSchedulersFacade : IRxSchedulersFacade
     {
         /// <summary>
         /// Schedulers pool with smart creation and re-use
+        /// <inheritdoc cref="IRxSchedulersFacade.Io"/>
         /// </summary>
         public IScheduler Io()
         {
@@ -18,39 +18,8 @@ namespace CrossPlatformLiveData.Internal.Facade
         }
 
         /// <summary>
-        /// Schedulers pool limited by device CPU threads number 
-        /// </summary>
-        public IScheduler Computation()
-        {
-            return ThreadPoolScheduler.Instance;
-        }
-
-        /// <summary>
-        /// Spawns new thread for each observable
-        /// </summary>
-        public IScheduler NewThread()
-        {
-            return new NewThreadScheduler();
-        }
-
-        /// <summary>
-        /// Platform default scheduler
-        /// </summary>
-        public IScheduler Default()
-        {
-            return DefaultScheduler.Instance;
-        }
-
-        /// <summary>
-        /// Runs task on current thread
-        /// </summary>
-        public IScheduler Trampoline()
-        {
-            return CurrentThreadScheduler.Instance;
-        }
-
-        /// <summary>
         /// Used for synchronizing with UI thread
+        /// <inheritdoc cref="IRxSchedulersFacade.Ui"/>
         /// </summary>
         public IScheduler Ui()
         {
