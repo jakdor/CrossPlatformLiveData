@@ -3,11 +3,11 @@
 namespace CrossPlatformLiveData
 {
     /// <summary>
-    /// CustomLiveData LifecycleManager interface
+    /// LiveData LifecycleManager interface
     /// </summary>
     public interface ILifecycleManager
     {
-        void Register<T>(ICustomLiveData<T> lifeData, Action<T> onNext, Action<Exception> onError);
+        void Register<T>(ILiveData<T> lifeData, Action<T> onNext, Action<Exception> onError);
         void OnResume();
         void OnPause();
         void OnDestroyView();

@@ -10,7 +10,7 @@ namespace CrossPlatformLiveData
     /// Custom cross-platform LiveData impl
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
-    public class CustomLiveData<T> : ICustomLiveData<T>
+    public class LiveData<T> : ILiveData<T>
     {
         private readonly BehaviorSubject<T> _subject;
         private readonly IRxSchedulersFacade _rxSchedulers = new RxSchedulersFacade();
@@ -27,7 +27,7 @@ namespace CrossPlatformLiveData
         /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
         /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
         /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
-        public CustomLiveData(bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
+        public LiveData(bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
         {
             _subject = new BehaviorSubject<T>(default(T));
             _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
@@ -42,7 +42,7 @@ namespace CrossPlatformLiveData
         /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
         /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
         /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
-        public CustomLiveData(T initValue, bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
+        public LiveData(T initValue, bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
         {
             _subject = new BehaviorSubject<T>(initValue);
             _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
@@ -58,7 +58,7 @@ namespace CrossPlatformLiveData
         /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
         /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
         /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
-        public CustomLiveData(T initValue, IRxSchedulersFacade rxSchedulers,
+        public LiveData(T initValue, IRxSchedulersFacade rxSchedulers,
             bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
         {
             _subject = new BehaviorSubject<T>(initValue);

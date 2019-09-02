@@ -6,7 +6,7 @@ namespace CrossPlatformLiveData
     /// LiveData interface
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
-    public interface ICustomLiveData<T>
+    public interface ILiveData<T>
     {
         T Value { get; }
         void PostValue(T value);

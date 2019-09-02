@@ -8,7 +8,7 @@ namespace CrossPlatformLiveData
 {
     /// <inheritdoc />
     /// <summary>
-    /// Provides automatic lifecycle awareness for CustomLiveData
+    /// Provides automatic lifecycle awareness for LiveData
     /// </summary>
     public class LifecycleManager : ILifecycleManager
     {
@@ -23,7 +23,7 @@ namespace CrossPlatformLiveData
         /// <param name="lifeData"></param>
         /// <param name="onNext"></param>
         /// <param name="onError"></param>
-        public void Register<T>(ICustomLiveData<T> lifeData, Action<T> onNext, Action<Exception> onError)
+        public void Register<T>(ILiveData<T> lifeData, Action<T> onNext, Action<Exception> onError)
         {
             _subscriptions.Add(new InternalObserverHolder<T>
             {
@@ -58,7 +58,7 @@ namespace CrossPlatformLiveData
         /// <param name="onNext"></param>
         /// <param name="onError"></param>
         /// <param name="internalId">Internal observable holder id</param>
-        protected void ReAdd<T>(ICustomLiveData<T> lifeData, Action<T> onNext, Action<Exception> onError, int internalId)
+        protected void ReAdd<T>(ILiveData<T> lifeData, Action<T> onNext, Action<Exception> onError, int internalId)
         {
             _disposable.Add(lifeData.Subscribe(onNext, onError, () =>
             {
