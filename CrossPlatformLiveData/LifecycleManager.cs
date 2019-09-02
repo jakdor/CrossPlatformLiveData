@@ -20,14 +20,14 @@ namespace CrossPlatformLiveData
         /// Registers new subscription and save observer info internally for resubscribing
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="lifeData"></param>
+        /// <param name="liveData"></param>
         /// <param name="onNext"></param>
         /// <param name="onError"></param>
-        public void Register<T>(ILiveData<T> lifeData, Action<T> onNext, Action<Exception> onError)
+        public void Register<T>(ILiveData<T> liveData, Action<T> onNext, Action<Exception> onError)
         {
             _subscriptions.Add(new InternalObserverHolder<T>
             {
-                LifeData = lifeData,
+                LifeData = liveData,
                 OnNext = onNext,
                 OnError = onError,
                 Id = _internalIdSequence++
@@ -54,13 +54,13 @@ namespace CrossPlatformLiveData
         /// Subscribe without saving observer
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="lifeData"></param>
+        /// <param name="liveData"></param>
         /// <param name="onNext"></param>
         /// <param name="onError"></param>
         /// <param name="internalId">Internal observable holder id</param>
-        protected void ReAdd<T>(ILiveData<T> lifeData, Action<T> onNext, Action<Exception> onError, int internalId)
+        protected void ReAdd<T>(ILiveData<T> liveData, Action<T> onNext, Action<Exception> onError, int internalId)
         {
-            _disposable.Add(lifeData.Subscribe(onNext, onError, () =>
+            _disposable.Add(liveData.Subscribe(onNext, onError, () =>
             {
                 var sub = _subscriptions.FirstOrDefault(holder => holder.Id == internalId);
                 if (sub != null) _subscriptions.Remove(sub);

@@ -7,7 +7,7 @@ namespace CrossPlatformLiveData
     /// </summary>
     public interface ILifecycleManager
     {
-        void Register<T>(ILiveData<T> lifeData, Action<T> onNext, Action<Exception> onError);
+        void Register<T>(ILiveData<T> liveData, Action<T> onNext, Action<Exception> onError);
         void OnResume();
         void OnPause();
         void OnDestroyView();
