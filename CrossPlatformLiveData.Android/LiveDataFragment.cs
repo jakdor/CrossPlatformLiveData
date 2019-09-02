@@ -1,11 +1,11 @@
-﻿using Android.Support.V4.App;
+﻿using Android.App;
 
 namespace CrossPlatformLiveData.Android
 {
     /// <summary>
-    /// Support Fragment with CrossPlatformLiveData LifecycleManager linked to lifecycle events
+    /// Fragment with CrossPlatformLiveData LifecycleManager linked to lifecycle events
     /// </summary>
-    public class LiveDataSupportFragment : Fragment
+    public class LiveDataFragment : Fragment
     {
         protected readonly ILifecycleManager LifecycleManager = new LifecycleManager();
 

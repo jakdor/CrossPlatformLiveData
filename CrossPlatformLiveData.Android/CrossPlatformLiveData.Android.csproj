@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LiveDataActivity.cs" />
+    <Compile Include="LiveDataAppCompatActivity.cs" />
+    <Compile Include="LiveDataAppCompatDialogFragment.cs" />
+    <Compile Include="LiveDataFragment.cs" />
+    <Compile Include="LiveDataFragmentActivity.cs" />
+    <Compile Include="LiveDataSupportDialogFragment.cs" />
     <Compile Include="LiveDataSupportFragment.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
