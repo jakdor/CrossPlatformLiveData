@@ -14,8 +14,7 @@ namespace CrossPlatformLiveData
     {
         private readonly BehaviorSubject<T> _subject;
         private readonly IRxSchedulersFacade _rxSchedulers = new RxSchedulersFacade();
-        private readonly bool _reEmitOnLifecycleFlag;
-        private readonly bool _allowDuplicatesInSequenceFlag;
+        private readonly bool _allowDuplicatesInSequenceAndOnResumeFlag;
         private T _lastEmitted;
 
         public T Value { get; private set; }
@@ -23,30 +22,26 @@ namespace CrossPlatformLiveData
         /// <summary>
         /// First emitted value will be type default
         /// </summary>
-        /// <param name="allowDuplicatesInSequence">If set emitting the same value one after another is allowed,
-        /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
-        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
-        /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
-        public LiveData(bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
+        /// <param name="allowDuplicatesInSequenceAndOnResume">If set emitting the same value one after another is allowed,
+        /// by default duplicates can be emitted only if there was another value in-between them in a sequence.
+        /// Will also cause value re-emission onResume lifecycle event</param>
+        public LiveData(bool allowDuplicatesInSequenceAndOnResume = false)
         {
             _subject = new BehaviorSubject<T>(default(T));
-            _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
-            _reEmitOnLifecycleFlag = reEmitOnLifecycle;
+            _allowDuplicatesInSequenceAndOnResumeFlag = allowDuplicatesInSequenceAndOnResume;
         }
 
         /// <summary>
         /// Emit first value with provided default
         /// </summary>
         /// <param name="initValue">Initial emitted value</param>
-        /// <param name="allowDuplicatesInSequence">If set emitting the same value one after another is allowed,
-        /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
-        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
-        /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
-        public LiveData(T initValue, bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
+        /// <param name="allowDuplicatesInSequenceAndOnResume">If set emitting the same value one after another is allowed,
+        /// by default duplicates can be emitted only if there was another value in-between them in a sequence.
+        /// Will also cause value re-emission onResume lifecycle event</param>
+        public LiveData(T initValue, bool allowDuplicatesInSequenceAndOnResume = false)
         {
             _subject = new BehaviorSubject<T>(initValue);
-            _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
-            _reEmitOnLifecycleFlag = reEmitOnLifecycle;
+            _allowDuplicatesInSequenceAndOnResumeFlag = allowDuplicatesInSequenceAndOnResume;
         }
 
         /// <summary>
@@ -54,17 +49,14 @@ namespace CrossPlatformLiveData
         /// </summary>
         /// <param name="initValue">Initial emitted value</param>
         /// <param name="rxSchedulers">Use custom IRxSchedulersFacade implementation</param>
-        /// <param name="allowDuplicatesInSequence">If set emitting the same value one after another is allowed,
-        /// by default duplicates can be emitted only if there was another value in-between them in a sequence</param>
-        /// <param name="reEmitOnLifecycle">If set value will be always remitted on resume and allowDuplicatesInSequence ignored,
-        /// by default lifecycle events doesn't trigger last value re-emission if value was already emitted</param>
-        public LiveData(T initValue, IRxSchedulersFacade rxSchedulers,
-            bool allowDuplicatesInSequence = false, bool reEmitOnLifecycle = false)
+        /// <param name="allowDuplicatesInSequenceAndOnResume">If set emitting the same value one after another is allowed,
+        /// by default duplicates can be emitted only if there was another value in-between them in a sequence.
+        /// Will also cause value re-emission onResume lifecycle event</param>
+        public LiveData(T initValue, IRxSchedulersFacade rxSchedulers, bool allowDuplicatesInSequenceAndOnResume = false)
         {
             _subject = new BehaviorSubject<T>(initValue);
             _rxSchedulers = rxSchedulers;
-            _allowDuplicatesInSequenceFlag = allowDuplicatesInSequence;
-            _reEmitOnLifecycleFlag = reEmitOnLifecycle;
+            _allowDuplicatesInSequenceAndOnResumeFlag = allowDuplicatesInSequenceAndOnResume;
         }
 
         /// <summary>
@@ -77,7 +69,8 @@ namespace CrossPlatformLiveData
         }
 
         /// <summary>
-        /// Subscribes to LiveData
+        /// Subscribes to LiveData, if allowDuplicatesInSequenceAndOnResume flag is set, duplicates in sequence will be allowed
+        /// and last value re-emitted on onResume event
         /// </summary>
         /// <param name="onNext">Emits only non null objects</param>
         /// <param name="onError"></param>
@@ -89,28 +82,17 @@ namespace CrossPlatformLiveData
                 .ObserveOn(_rxSchedulers.Ui())
                 .Subscribe(obj =>
                 {
-                    if (obj != null && _reEmitOnLifecycleFlag)
+                    if (obj != null && _allowDuplicatesInSequenceAndOnResumeFlag)
                     {
                         Value = obj;
                         onNext.Invoke(obj);
                     }
                     else
                     {
-                        if (_allowDuplicatesInSequenceFlag)
+                        if (obj != null && !obj.Equals(_lastEmitted))
                         {
-                            if (obj != null)
-                            {
-                                Value = obj;
-                                onNext.Invoke(obj);
-                            }
-                        }
-                        else
-                        {
-                            if (obj != null && !obj.Equals(_lastEmitted))
-                            {
-                                Value = obj;
-                                onNext.Invoke(obj);
-                            }
+                            Value = obj;
+                            onNext.Invoke(obj);
                         }
 
                         _lastEmitted = obj;
