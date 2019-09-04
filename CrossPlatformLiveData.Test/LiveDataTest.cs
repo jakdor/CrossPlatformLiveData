@@ -10,13 +10,13 @@ namespace CrossPlatformLiveData.Test
     [TestClass]
     public class LiveDataTest
     {
-        private ILiveData<int> _liveDataSimpleType;
-        private ILiveData<string> _liveDataObjType;
+        private ILiveData<int> _liveDataValueType;
+        private ILiveData<string> _liveDataReferenceType;
         private Mock<ILifecycleManager> _lifecycleManagerMock;
         private Mock<IRxSchedulersFacade> _testRxSchedulerFacade;
 
-        private readonly IList<int> _emittedVerificationListSimple = new List<int>();
-        private readonly IList<string> _emittedVerificationListObj = new List<string>();
+        private readonly IList<int> _emittedVerificationListValue = new List<int>();
+        private readonly IList<string> _emittedVerificationListReference = new List<string>();
         private IDisposable _singleDisposable;
 
         [TestInitialize]
@@ -40,169 +40,169 @@ namespace CrossPlatformLiveData.Test
         [TestMethod]
         public void ObserveTest()
         {
-            _liveDataSimpleType = new LiveData<int>();
+            _liveDataValueType = new LiveData<int>();
             Action<int> onNextMock = i => { };
             Action<Exception> onErrorMock = exception => { }; 
 
-            _liveDataSimpleType.Observe(_lifecycleManagerMock.Object, onNextMock, onErrorMock);
+            _liveDataValueType.Observe(_lifecycleManagerMock.Object, onNextMock, onErrorMock);
 
-            _lifecycleManagerMock.Verify(manager => manager.Register(_liveDataSimpleType, onNextMock, onErrorMock), Times.Once());
+            _lifecycleManagerMock.Verify(manager => manager.Register(_liveDataValueType, onNextMock, onErrorMock), Times.Once());
         }
 
         /// <summary>
-        /// Test initial value not emitted if type default, simple type
+        /// Test initial value not emitted if type default, value type
         /// </summary>
         [TestMethod]
-        public void InitValueIgnoreTypeDefaultSimpleTest()
+        public void InitValueIgnoreTypeDefaultValueTypeTest()
         {
-            _liveDataSimpleType = new LiveData<int>(default(int), _testRxSchedulerFacade.Object);
+            _liveDataValueType = new LiveData<int>(default(int), _testRxSchedulerFacade.Object);
 
-            _singleDisposable = _liveDataSimpleType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataValueType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
 
-            Assert.AreEqual(0, _emittedVerificationListSimple.Count);
+            Assert.AreEqual(0, _emittedVerificationListValue.Count);
         }
 
         /// <summary>
-        /// Test initial value not emitted if type default, object type
+        /// Test initial value not emitted if type default, reference type
         /// </summary>
         [TestMethod]
-        public void InitValueIgnoreTypeDefaultObjTest()
+        public void InitValueIgnoreTypeDefaultReferenceTypeTest()
         {
-            _liveDataObjType = new LiveData<string>(default(string), _testRxSchedulerFacade.Object);
+            _liveDataReferenceType = new LiveData<string>(default(string), _testRxSchedulerFacade.Object);
 
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
 
-            Assert.AreEqual(0, _emittedVerificationListSimple.Count);
+            Assert.AreEqual(0, _emittedVerificationListValue.Count);
         }
 
         /// <summary>
-        /// Test initial value, simple type
+        /// Test initial value, value type
         /// </summary>
         [TestMethod]
-        public void InitValueSimpleTest()
+        public void InitValueValueTypeTest()
         {
             var randomGen = new Random();
             var val0 = randomGen.Next();
-            _liveDataSimpleType = new LiveData<int>(val0, _testRxSchedulerFacade.Object);
+            _liveDataValueType = new LiveData<int>(val0, _testRxSchedulerFacade.Object);
 
-            _singleDisposable = _liveDataSimpleType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataValueType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
 
-            Assert.AreEqual(1, _emittedVerificationListSimple.Count);
-            Assert.AreEqual(val0, _emittedVerificationListSimple[0]);
+            Assert.AreEqual(1, _emittedVerificationListValue.Count);
+            Assert.AreEqual(val0, _emittedVerificationListValue[0]);
         }
 
         /// <summary>
-        /// Test initial value, object type
+        /// Test initial value, reference type
         /// </summary>
         [TestMethod]
-        public void InitValueObjTest()
+        public void InitValueReferenceTypeTest()
         {
             var val0 = TestUtils.RandomString(32);
-            _liveDataObjType = new LiveData<string>(val0, _testRxSchedulerFacade.Object);
+            _liveDataReferenceType = new LiveData<string>(val0, _testRxSchedulerFacade.Object);
 
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
 
-            Assert.AreEqual(1, _emittedVerificationListObj.Count);
-            Assert.AreEqual(val0, _emittedVerificationListObj[0]);
+            Assert.AreEqual(1, _emittedVerificationListReference.Count);
+            Assert.AreEqual(val0, _emittedVerificationListReference[0]);
         }
 
         /// <summary>
-        /// Test default simple type, default settings
+        /// Test default value type, default settings
         /// allowDuplicatesInSequence = false
         /// </summary>
         [TestMethod]
-        public void SubscribeSimpleTypeDefaultSettingsTest()
+        public void SubscribeValueTypeDefaultSettingsTest()
         {
             var randomGen = new Random();
             var val0 = randomGen.Next();
             var val1 = randomGen.Next();
             var val2 = randomGen.Next();
-            _liveDataSimpleType = new LiveData<int>(val0, _testRxSchedulerFacade.Object);
+            _liveDataValueType = new LiveData<int>(val0, _testRxSchedulerFacade.Object);
 
-            _singleDisposable = _liveDataSimpleType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataValueType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
             var testSequence = new List<int>(new []{ val1, val2, val2, val1, val2, val1, val1});
-            testSequence.ForEach(i => _liveDataSimpleType.PostValue(i));
+            testSequence.ForEach(i => _liveDataValueType.PostValue(i));
 
-            Assert.AreEqual(6, _emittedVerificationListSimple.Count);
-            Assert.AreEqual(val0, _emittedVerificationListSimple[0]);
-            Assert.AreEqual(val1, _emittedVerificationListSimple[1]);
-            Assert.AreEqual(val2, _emittedVerificationListSimple[2]);
-            Assert.AreEqual(val1, _emittedVerificationListSimple[3]);
-            Assert.AreEqual(val2, _emittedVerificationListSimple[4]);
-            Assert.AreEqual(val1, _emittedVerificationListSimple[5]);
+            Assert.AreEqual(6, _emittedVerificationListValue.Count);
+            Assert.AreEqual(val0, _emittedVerificationListValue[0]);
+            Assert.AreEqual(val1, _emittedVerificationListValue[1]);
+            Assert.AreEqual(val2, _emittedVerificationListValue[2]);
+            Assert.AreEqual(val1, _emittedVerificationListValue[3]);
+            Assert.AreEqual(val2, _emittedVerificationListValue[4]);
+            Assert.AreEqual(val1, _emittedVerificationListValue[5]);
         }
 
         /// <summary>
-        /// Test default simple type, duplicates in sequence allowed
+        /// Test default value type, duplicates in sequence allowed
         /// allowDuplicatesInSequence = true
         /// </summary>
         [TestMethod]
-        public void SubscribeSimpleTypeAllowDuplicatesTest()
+        public void SubscribeValueTypeAllowDuplicatesTest()
         {
             var randomGen = new Random();
             var val0 = randomGen.Next();
             var val1 = randomGen.Next();
             var val2 = randomGen.Next();
-            _liveDataSimpleType = new LiveData<int>(val0, _testRxSchedulerFacade.Object, true);
+            _liveDataValueType = new LiveData<int>(val0, _testRxSchedulerFacade.Object, true);
 
-            _singleDisposable = _liveDataSimpleType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataValueType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
             var testSequence = new List<int>(new[] { val1, val2, val2, val1, val2, val1, val1 });
-            testSequence.ForEach(i => _liveDataSimpleType.PostValue(i));
+            testSequence.ForEach(i => _liveDataValueType.PostValue(i));
 
-            Assert.AreEqual(8, _emittedVerificationListSimple.Count);
-            Assert.AreEqual(val0, _emittedVerificationListSimple[0]);
-            for (var i = 1; i < _emittedVerificationListSimple.Count; ++i)
+            Assert.AreEqual(8, _emittedVerificationListValue.Count);
+            Assert.AreEqual(val0, _emittedVerificationListValue[0]);
+            for (var i = 1; i < _emittedVerificationListValue.Count; ++i)
             {
-                Assert.AreEqual(testSequence[i - 1], _emittedVerificationListSimple[i]);
+                Assert.AreEqual(testSequence[i - 1], _emittedVerificationListValue[i]);
             }
         }
 
         /// <summary>
-        /// Test default object type, default settings
+        /// Test default reference type, default settings
         /// allowDuplicatesInSequence = false
         /// </summary>
         [TestMethod]
-        public void SubscribeObjectTypeDefaultSettingsTest()
+        public void SubscribeReferenceTypeDefaultSettingsTest()
         {
             var val0 = TestUtils.RandomString(32);
             var val1 = TestUtils.RandomString(32);
             var val2 = TestUtils.RandomString(32);
-            _liveDataObjType = new LiveData<string>(val0, _testRxSchedulerFacade.Object);
+            _liveDataReferenceType = new LiveData<string>(val0, _testRxSchedulerFacade.Object);
 
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
             var testSequence = new List<string>(new[] { val1, val2, val2, val1, val2, val1, val1 });
-            testSequence.ForEach(s => _liveDataObjType.PostValue(s));
+            testSequence.ForEach(s => _liveDataReferenceType.PostValue(s));
 
-            Assert.AreEqual(6, _emittedVerificationListObj.Count);
-            Assert.AreEqual(val0, _emittedVerificationListObj[0]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[1]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[2]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[3]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[4]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[5]);
+            Assert.AreEqual(6, _emittedVerificationListReference.Count);
+            Assert.AreEqual(val0, _emittedVerificationListReference[0]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[1]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[2]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[3]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[4]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[5]);
         }
 
         /// <summary>
-        /// Test default object type, duplicates in sequence allowed
+        /// Test default reference type, duplicates in sequence allowed
         /// allowDuplicatesInSequence = true
         /// </summary>
         [TestMethod]
-        public void SubscribeObjectTypeAllowDuplicatesTest()
+        public void SubscribeReferenceTypeAllowDuplicatesTest()
         {
             var val0 = TestUtils.RandomString(32);
             var val1 = TestUtils.RandomString(32);
             var val2 = TestUtils.RandomString(32);
-            _liveDataObjType = new LiveData<string>(val0, _testRxSchedulerFacade.Object, true);
+            _liveDataReferenceType = new LiveData<string>(val0, _testRxSchedulerFacade.Object, true);
 
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
             var testSequence = new List<string>(new[] { val1, val2, val2, val1, val2, val1, val1 });
-            testSequence.ForEach(s => _liveDataObjType.PostValue(s));
+            testSequence.ForEach(s => _liveDataReferenceType.PostValue(s));
 
-            Assert.AreEqual(8, _emittedVerificationListObj.Count);
-            Assert.AreEqual(val0, _emittedVerificationListObj[0]);
-            for (var i = 1; i < _emittedVerificationListObj.Count; ++i)
+            Assert.AreEqual(8, _emittedVerificationListReference.Count);
+            Assert.AreEqual(val0, _emittedVerificationListReference[0]);
+            for (var i = 1; i < _emittedVerificationListReference.Count; ++i)
             {
-                Assert.AreEqual(testSequence[i - 1], _emittedVerificationListObj[i]);
+                Assert.AreEqual(testSequence[i - 1], _emittedVerificationListReference[i]);
             }
         }
 
@@ -216,29 +216,29 @@ namespace CrossPlatformLiveData.Test
             var val0 = TestUtils.RandomString(32);
             var val1 = TestUtils.RandomString(32);
             var val2 = TestUtils.RandomString(32);
-            _liveDataObjType = new LiveData<string>(val0, _testRxSchedulerFacade.Object);
+            _liveDataReferenceType = new LiveData<string>(val0, _testRxSchedulerFacade.Object);
 
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
             var testSequence = new List<string>(new[] { val1, val2, val2, val1, val2, val1, val1 });
-            _liveDataObjType.PostValue(testSequence[0]);
-            _liveDataObjType.PostValue(testSequence[1]);
-            _liveDataObjType.PostValue(testSequence[2]);
+            _liveDataReferenceType.PostValue(testSequence[0]);
+            _liveDataReferenceType.PostValue(testSequence[1]);
+            _liveDataReferenceType.PostValue(testSequence[2]);
             _singleDisposable.Dispose();
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
-            _liveDataObjType.PostValue(testSequence[3]);
-            _liveDataObjType.PostValue(testSequence[4]);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataReferenceType.PostValue(testSequence[3]);
+            _liveDataReferenceType.PostValue(testSequence[4]);
             _singleDisposable.Dispose();
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
-            _liveDataObjType.PostValue(testSequence[5]);
-            _liveDataObjType.PostValue(testSequence[6]);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataReferenceType.PostValue(testSequence[5]);
+            _liveDataReferenceType.PostValue(testSequence[6]);
 
-            Assert.AreEqual(6, _emittedVerificationListObj.Count);
-            Assert.AreEqual(val0, _emittedVerificationListObj[0]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[1]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[2]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[3]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[4]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[5]);
+            Assert.AreEqual(6, _emittedVerificationListReference.Count);
+            Assert.AreEqual(val0, _emittedVerificationListReference[0]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[1]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[2]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[3]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[4]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[5]);
         }
 
         /// <summary>
@@ -251,38 +251,37 @@ namespace CrossPlatformLiveData.Test
             var val0 = TestUtils.RandomString(32);
             var val1 = TestUtils.RandomString(32);
             var val2 = TestUtils.RandomString(32);
-            _liveDataObjType = new LiveData<string>(val0, _testRxSchedulerFacade.Object, true);
+            _liveDataReferenceType = new LiveData<string>(val0, _testRxSchedulerFacade.Object, true);
 
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
             var testSequence = new List<string>(new[] { val1, val2, val2, val1, val2, val1, val1 });
-            _liveDataObjType.PostValue(testSequence[0]);
-            _liveDataObjType.PostValue(testSequence[1]);
-            _liveDataObjType.PostValue(testSequence[2]);
+            _liveDataReferenceType.PostValue(testSequence[0]);
+            _liveDataReferenceType.PostValue(testSequence[1]);
+            _liveDataReferenceType.PostValue(testSequence[2]);
             _singleDisposable.Dispose();
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
-            _liveDataObjType.PostValue(testSequence[3]);
-            _liveDataObjType.PostValue(testSequence[4]);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataReferenceType.PostValue(testSequence[3]);
+            _liveDataReferenceType.PostValue(testSequence[4]);
             _singleDisposable.Dispose();
-            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
-            _liveDataObjType.PostValue(testSequence[5]);
-            _liveDataObjType.PostValue(testSequence[6]);
+            _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataReferenceType.PostValue(testSequence[5]);
+            _liveDataReferenceType.PostValue(testSequence[6]);
 
-            Assert.AreEqual(10, _emittedVerificationListObj.Count);
-            Assert.AreEqual(val0, _emittedVerificationListObj[0]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[1]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[2]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[3]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[4]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[5]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[6]);
-            Assert.AreEqual(val2, _emittedVerificationListObj[7]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[8]);
-            Assert.AreEqual(val1, _emittedVerificationListObj[9]);
+            Assert.AreEqual(10, _emittedVerificationListReference.Count);
+            Assert.AreEqual(val0, _emittedVerificationListReference[0]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[1]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[2]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[3]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[4]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[5]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[6]);
+            Assert.AreEqual(val2, _emittedVerificationListReference[7]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[8]);
+            Assert.AreEqual(val1, _emittedVerificationListReference[9]);
         }
 
-
-        private void OnNextMock(int i) => _emittedVerificationListSimple.Add(i);
-        private void OnNextMock(string obj) => _emittedVerificationListObj.Add(obj);
+        private void OnNextMock(int i) => _emittedVerificationListValue.Add(i);
+        private void OnNextMock(string obj) => _emittedVerificationListReference.Add(obj);
         private void OnErrorMock(Exception exception) => Assert.Fail("onError called");
         private void OnCompletedMock() { }
     }
