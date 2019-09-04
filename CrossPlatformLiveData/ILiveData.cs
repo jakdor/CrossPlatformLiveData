@@ -12,5 +12,6 @@ namespace CrossPlatformLiveData
         void PostValue(T value);
         IDisposable Subscribe(Action<T> onNext, Action<Exception> onError, Action onCompleted);
         void Observe(ILifecycleManager lifecycleManager, Action<T> onNext, Action<Exception> onError);
+        void InvalidateLastPostedValue();
     }
 }

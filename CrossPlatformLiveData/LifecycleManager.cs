@@ -27,7 +27,7 @@ namespace CrossPlatformLiveData
         {
             _subscriptions.Add(new InternalObserverHolder<T>
             {
-                LifeData = liveData,
+                LiveData = liveData,
                 OnNext = onNext,
                 OnError = onError,
                 Id = _internalIdSequence++
@@ -75,7 +75,7 @@ namespace CrossPlatformLiveData
             foreach (var sub in _subscriptions)
             {
                 var typedSub = DynamicCast(sub, sub.Type);
-                ReAdd(typedSub.LifeData, typedSub.OnNext, typedSub.OnError, typedSub.Id);
+                ReAdd(typedSub.LiveData, typedSub.OnNext, typedSub.OnError, typedSub.Id);
             }
         }
 
@@ -88,10 +88,16 @@ namespace CrossPlatformLiveData
         }
 
         /// <summary>
-        /// Resets LifecycleManager, can be reused 
+        /// Resets LifecycleManager, can be reused
+        /// Notifies LiveData to invalidate last posted value, so last value can be re-emitted onResume event
         /// </summary>
         public void OnDestroyView()
         {
+            foreach (var sub in _subscriptions)
+            {
+                var typedSub = DynamicCast(sub, sub.Type);
+                typedSub.LiveData.InvalidateLastPostedValue();
+            }
             _subscriptions.Clear();
             _disposable.Clear();
         }

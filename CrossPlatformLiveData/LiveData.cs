@@ -110,5 +110,13 @@ namespace CrossPlatformLiveData
         {
             lifecycleManager.Register(this, onNext, onError);
         }
+
+        /// <summary>
+        /// Will cause re-emission of last posted value even without allowDuplicatesInSequenceAndOnResume flag 
+        /// </summary>
+        public void InvalidateLastPostedValue()
+        {
+            _lastEmitted = default(T);
+        }
     }
 }

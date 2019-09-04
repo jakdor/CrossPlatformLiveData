@@ -8,7 +8,7 @@ namespace CrossPlatformLiveData.Internal.Model
     /// <typeparam name="T"></typeparam>
     internal class InternalObserverHolder<T> : IInternalObserverHolder
     {
-        public ILiveData<T> LifeData { get; set; }
+        public ILiveData<T> LiveData { get; set; }
         public Action<T> OnNext { get; set; }
         public Action<Exception> OnError { get; set; }
         public int Id { get; set; }
