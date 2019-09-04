@@ -60,6 +60,7 @@ namespace CrossPlatformLiveData.Test
             _singleDisposable = _liveDataValueType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
 
             Assert.AreEqual(0, _emittedVerificationListValue.Count);
+            Assert.AreEqual(default(int), _liveDataValueType.Value);
         }
 
         /// <summary>
@@ -73,6 +74,7 @@ namespace CrossPlatformLiveData.Test
             _singleDisposable = _liveDataReferenceType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
 
             Assert.AreEqual(0, _emittedVerificationListValue.Count);
+            Assert.AreEqual(default(string), _liveDataReferenceType.Value);
         }
 
         /// <summary>
@@ -89,6 +91,7 @@ namespace CrossPlatformLiveData.Test
 
             Assert.AreEqual(1, _emittedVerificationListValue.Count);
             Assert.AreEqual(val0, _emittedVerificationListValue[0]);
+            Assert.AreEqual(val0, _liveDataValueType.Value);
         }
 
         /// <summary>
@@ -104,6 +107,7 @@ namespace CrossPlatformLiveData.Test
 
             Assert.AreEqual(1, _emittedVerificationListReference.Count);
             Assert.AreEqual(val0, _emittedVerificationListReference[0]);
+            Assert.AreEqual(val0, _liveDataReferenceType.Value);
         }
 
         /// <summary>
@@ -130,6 +134,7 @@ namespace CrossPlatformLiveData.Test
             Assert.AreEqual(val1, _emittedVerificationListValue[3]);
             Assert.AreEqual(val2, _emittedVerificationListValue[4]);
             Assert.AreEqual(val1, _emittedVerificationListValue[5]);
+            Assert.AreEqual(val1, _liveDataValueType.Value);
         }
 
         /// <summary>
@@ -155,6 +160,7 @@ namespace CrossPlatformLiveData.Test
             {
                 Assert.AreEqual(testSequence[i - 1], _emittedVerificationListValue[i]);
             }
+            Assert.AreEqual(testSequence[testSequence.Count - 1], _liveDataValueType.Value);
         }
 
         /// <summary>
@@ -180,6 +186,7 @@ namespace CrossPlatformLiveData.Test
             Assert.AreEqual(val1, _emittedVerificationListReference[3]);
             Assert.AreEqual(val2, _emittedVerificationListReference[4]);
             Assert.AreEqual(val1, _emittedVerificationListReference[5]);
+            Assert.AreEqual(val1, _liveDataReferenceType.Value);
         }
 
         /// <summary>
@@ -204,6 +211,7 @@ namespace CrossPlatformLiveData.Test
             {
                 Assert.AreEqual(testSequence[i - 1], _emittedVerificationListReference[i]);
             }
+            Assert.AreEqual(testSequence[testSequence.Count - 1], _liveDataReferenceType.Value);
         }
 
         /// <summary>
@@ -239,6 +247,7 @@ namespace CrossPlatformLiveData.Test
             Assert.AreEqual(val1, _emittedVerificationListReference[3]);
             Assert.AreEqual(val2, _emittedVerificationListReference[4]);
             Assert.AreEqual(val1, _emittedVerificationListReference[5]);
+            Assert.AreEqual(val1, _liveDataReferenceType.Value);
         }
 
         /// <summary>
@@ -278,6 +287,7 @@ namespace CrossPlatformLiveData.Test
             Assert.AreEqual(val2, _emittedVerificationListReference[7]);
             Assert.AreEqual(val1, _emittedVerificationListReference[8]);
             Assert.AreEqual(val1, _emittedVerificationListReference[9]);
+            Assert.AreEqual(val1, _liveDataReferenceType.Value);
         }
 
         private void OnNextMock(int i) => _emittedVerificationListValue.Add(i);
