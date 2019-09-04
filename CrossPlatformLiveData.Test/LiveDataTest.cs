@@ -109,7 +109,6 @@ namespace CrossPlatformLiveData.Test
         /// <summary>
         /// Test default simple type, default settings
         /// allowDuplicatesInSequence = false
-        /// reEmitOnLifecycle = false
         /// </summary>
         [TestMethod]
         public void SubscribeSimpleTypeDefaultSettingsTest()
@@ -136,7 +135,6 @@ namespace CrossPlatformLiveData.Test
         /// <summary>
         /// Test default simple type, duplicates in sequence allowed
         /// allowDuplicatesInSequence = true
-        /// reEmitOnLifecycle = false
         /// </summary>
         [TestMethod]
         public void SubscribeSimpleTypeAllowDuplicatesTest()
@@ -162,7 +160,6 @@ namespace CrossPlatformLiveData.Test
         /// <summary>
         /// Test default object type, default settings
         /// allowDuplicatesInSequence = false
-        /// reEmitOnLifecycle = false
         /// </summary>
         [TestMethod]
         public void SubscribeObjectTypeDefaultSettingsTest()
@@ -188,7 +185,6 @@ namespace CrossPlatformLiveData.Test
         /// <summary>
         /// Test default object type, duplicates in sequence allowed
         /// allowDuplicatesInSequence = true
-        /// reEmitOnLifecycle = false
         /// </summary>
         [TestMethod]
         public void SubscribeObjectTypeAllowDuplicatesTest()
@@ -209,6 +205,81 @@ namespace CrossPlatformLiveData.Test
                 Assert.AreEqual(testSequence[i - 1], _emittedVerificationListObj[i]);
             }
         }
+
+        /// <summary>
+        /// Test if onResume (resubscribe) doesn't cause last value re-emission with default settings
+        /// allowDuplicatesInSequence = false
+        /// </summary>
+        [TestMethod]
+        public void SubscribeOnResumeDefaultSettingsNoReEmissionTest()
+        {
+            var val0 = TestUtils.RandomString(32);
+            var val1 = TestUtils.RandomString(32);
+            var val2 = TestUtils.RandomString(32);
+            _liveDataObjType = new LiveData<string>(val0, _testRxSchedulerFacade.Object);
+
+            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            var testSequence = new List<string>(new[] { val1, val2, val2, val1, val2, val1, val1 });
+            _liveDataObjType.PostValue(testSequence[0]);
+            _liveDataObjType.PostValue(testSequence[1]);
+            _liveDataObjType.PostValue(testSequence[2]);
+            _singleDisposable.Dispose();
+            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataObjType.PostValue(testSequence[3]);
+            _liveDataObjType.PostValue(testSequence[4]);
+            _singleDisposable.Dispose();
+            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataObjType.PostValue(testSequence[5]);
+            _liveDataObjType.PostValue(testSequence[6]);
+
+            Assert.AreEqual(6, _emittedVerificationListObj.Count);
+            Assert.AreEqual(val0, _emittedVerificationListObj[0]);
+            Assert.AreEqual(val1, _emittedVerificationListObj[1]);
+            Assert.AreEqual(val2, _emittedVerificationListObj[2]);
+            Assert.AreEqual(val1, _emittedVerificationListObj[3]);
+            Assert.AreEqual(val2, _emittedVerificationListObj[4]);
+            Assert.AreEqual(val1, _emittedVerificationListObj[5]);
+        }
+
+        /// <summary>
+        /// Test if onResume (resubscribe) will trigger last value re-emission if duplicates are allowed
+        /// allowDuplicatesInSequence = true
+        /// </summary>
+        [TestMethod]
+        public void SubscribeOnResumeAllowDuplicatesReEmissionTest()
+        {
+            var val0 = TestUtils.RandomString(32);
+            var val1 = TestUtils.RandomString(32);
+            var val2 = TestUtils.RandomString(32);
+            _liveDataObjType = new LiveData<string>(val0, _testRxSchedulerFacade.Object, true);
+
+            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            var testSequence = new List<string>(new[] { val1, val2, val2, val1, val2, val1, val1 });
+            _liveDataObjType.PostValue(testSequence[0]);
+            _liveDataObjType.PostValue(testSequence[1]);
+            _liveDataObjType.PostValue(testSequence[2]);
+            _singleDisposable.Dispose();
+            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataObjType.PostValue(testSequence[3]);
+            _liveDataObjType.PostValue(testSequence[4]);
+            _singleDisposable.Dispose();
+            _singleDisposable = _liveDataObjType.Subscribe(OnNextMock, OnErrorMock, OnCompletedMock);
+            _liveDataObjType.PostValue(testSequence[5]);
+            _liveDataObjType.PostValue(testSequence[6]);
+
+            Assert.AreEqual(10, _emittedVerificationListObj.Count);
+            Assert.AreEqual(val0, _emittedVerificationListObj[0]);
+            Assert.AreEqual(val1, _emittedVerificationListObj[1]);
+            Assert.AreEqual(val2, _emittedVerificationListObj[2]);
+            Assert.AreEqual(val2, _emittedVerificationListObj[3]);
+            Assert.AreEqual(val2, _emittedVerificationListObj[4]);
+            Assert.AreEqual(val1, _emittedVerificationListObj[5]);
+            Assert.AreEqual(val2, _emittedVerificationListObj[6]);
+            Assert.AreEqual(val2, _emittedVerificationListObj[7]);
+            Assert.AreEqual(val1, _emittedVerificationListObj[8]);
+            Assert.AreEqual(val1, _emittedVerificationListObj[9]);
+        }
+
 
         private void OnNextMock(int i) => _emittedVerificationListSimple.Add(i);
         private void OnNextMock(string obj) => _emittedVerificationListObj.Add(obj);
