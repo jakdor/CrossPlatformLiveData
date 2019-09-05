@@ -1,5 +1,2 @@
 language: csharp
 solution: CrossPlatformLiveData.sln
-install:
-    - msbuild /t:CrossPlatformLiveData /p:Configuration=Release CrossPlatformLiveData.sln
-    - nuget restore CrossPlatformLiveData.sln
