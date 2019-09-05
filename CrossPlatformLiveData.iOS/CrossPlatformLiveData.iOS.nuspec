@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>CrossPlatformLiveData.iOS</id>
+    <version>1.0.0</version>
+    <title>CrossPlatformLiveData.iOS</title>
+    <authors>Jakub Dorda</authors>
+    <owners>Jakub Dorda</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Base iOS classes for CrossPlatformLiveData</description>
+    <summary></summary>
+    <releaseNotes></releaseNotes>
+    <copyright>2019 Jakub Dorda</copyright>
+    <language></language>
+    <dependencies>
+		<group targetFramework=".NETStandard2.0">
+			<dependency id="CrossPlatformLiveData" version="1.0.0" />
+		</group>
+    </dependencies>
+  </metadata>
+  <files>
+   <file src="bin\Release\CrossPlatformLiveData.iOS.dll"  target="lib\netstandard2.0" ></file>
+  </files>
+</package>
