@@ -1,2 +1,4 @@
 language: csharp
 solution: CrossPlatformLiveData.sln
+script:
+    - msbuild /t:CrossPlatformLiveData /p:Configuration=Release CrossPlatformLiveData.sln
