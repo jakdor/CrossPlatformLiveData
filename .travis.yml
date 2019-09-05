@@ -1,2 +1,4 @@
 language: csharp
 solution: CrossPlatformLiveData.sln
+install:
+    - nuget restore --ignore-failed-sources CrossPlatformLiveData.sln
