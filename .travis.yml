@@ -2,5 +2,3 @@ language: csharp
 solution: CrossPlatformLiveData.sln
 script:
     - msbuild /t:CrossPlatformLiveData /p:Configuration=Release CrossPlatformLiveData.sln
-    - msbuild /t:CrossPlatformLiveData_Android /p:Configuration=Release CrossPlatformLiveData.sln
-    - msbuild /t:CrossPlatformLiveData_iOS /p:Configuration=Release CrossPlatformLiveData.sln
