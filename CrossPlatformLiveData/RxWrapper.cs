@@ -7,11 +7,11 @@ namespace CrossPlatformLiveData
     /// </summary>
     public class RxWrapper<T>
     {
-        public Enum Status { get; set; }
+        public RxStatus Status { get; set; }
         public T Data { get; set; }
         public Exception Exception { get; set; }
 
-        public RxWrapper(Enum status, T data, Exception e = null)
+        public RxWrapper(RxStatus status, T data, Exception e = null)
         {
             Status = status;
             Data = data;
@@ -24,7 +24,7 @@ namespace CrossPlatformLiveData
             Data = data;
         }
 
-        public RxWrapper(Enum status)
+        public RxWrapper(RxStatus status)
         {
             Status = status;
         }
