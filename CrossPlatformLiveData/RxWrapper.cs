@@ -11,6 +11,13 @@ namespace CrossPlatformLiveData
         public T Data { get; set; }
         public Exception Exception { get; set; }
 
+        public RxWrapper(Enum status, T data, Exception e = null)
+        {
+            Status = status;
+            Data = data;
+            Exception = e;
+        }
+
         public RxWrapper(T data)
         {
             Status = RxStatus.Ok;
@@ -20,12 +27,6 @@ namespace CrossPlatformLiveData
         public RxWrapper(Enum status)
         {
             Status = status;
-        }
-
-        public RxWrapper(Enum status, T data)
-        {
-            Status = status;
-            Data = data;
         }
 
         public RxWrapper(Exception e)
