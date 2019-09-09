@@ -49,7 +49,7 @@ namespace Sample.Core.ViewModel
         public void GetFakeNetworking()
         {
             //Check if request is not already pending
-            if (FakeNetworkingLiveData.Value.Status != RxStatus.Pending)
+            if (FakeNetworkingLiveData.Value?.Status != RxStatus.Pending)
             {
                 //Notify UI that request is pending
                 FakeNetworkingLiveData.PostValue(RxWrapper<SampleResponse>.Pending());
