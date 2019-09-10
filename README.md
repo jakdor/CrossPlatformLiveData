@@ -9,27 +9,27 @@ Features:
 * Last value cache - state preservation,
 * Everything that you need to implement MVVM pattern
 
-![CrossPlatformLiveData - MVVM pattern](https://github.com/jakdor/CrossPlatformLiveData/tree/master/img/mvvm.png)
+![CrossPlatformLiveData - MVVM pattern](https://github.com/jakdor/CrossPlatformLiveData/tree/master/img/mvvm.png?raw=true)
 
 Installation
 ------
 
-Core/Logic project - add CrossPlatformLiveData nuget,
-Android project - add CrossPlatformLiveData, CrossPlatformLiveData.Android nuggets,
-iOS project - add CrossPlatformLiveData, CrossPlatformLiveData.iOS nuggets
+- Core/Logic project - add CrossPlatformLiveData nuget,
+- Android project - add CrossPlatformLiveData, CrossPlatformLiveData.Android nuggets,
+- iOS project - add CrossPlatformLiveData, CrossPlatformLiveData.iOS nuggets
 
 CrossPlatformLiveData.Android provides base UI classes with LifecycleManger linked to lifecycle events:
-**LiveDataActivity, LiveDataAppCompatActivity, LiveDataAppCompatDialogFragment, LiveDataFragment, LiveDataFragmentActivity, LiveDataSupportDialogFragment, LiveDataSupportFragment**
+- **LiveDataActivity, LiveDataAppCompatActivity, LiveDataAppCompatDialogFragment, LiveDataFragment, LiveDataFragmentActivity, LiveDataSupportDialogFragment, LiveDataSupportFragment**
 
 CrossPlatformLiveData.iOS provides base UI classes with LifecycleManger linked to lifecycle events:
-**LiveDataViewController**
+- **LiveDataViewController**
 
 For other platforms all you need to do is provide LifecycleManger with lifecyle events when they occur, implementation should be self explanatory.
 
 Usage
 ------
 
-Logic/Core:
+**Logic/Core:**
 
 Add LiveData fields in ViewModel/Presenter class:
 ```cs
@@ -41,7 +41,7 @@ Post new value to LiveData:
 SampleLiveData.PostValue("Hello World!");
 ```
 
-UI:
+**UI:**
 
 Observe LiveData streams with LifecycleManager
 ```cs
