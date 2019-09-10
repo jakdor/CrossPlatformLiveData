@@ -19,6 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-   <file src="bin\Release\CrossPlatformLiveData.iOS.dll"  target="lib\Xamarin.iOS8" ></file>
+   <file src="bin\Release\CrossPlatformLiveData.iOS.dll"  target="lib\Xamarin.iOS10" ></file>
   </files>
 </package>
