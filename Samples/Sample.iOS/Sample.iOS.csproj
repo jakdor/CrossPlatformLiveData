@@ -137,5 +137,11 @@
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sample.Core\Sample.Core.csproj">
+      <Project>{5F406DE0-52F8-46D9-AD5E-115AB619680E}</Project>
+      <Name>Sample.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

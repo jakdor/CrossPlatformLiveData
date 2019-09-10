@@ -1,4 +1,6 @@
 ﻿using Foundation;
+using Sample.Core.ViewModel;
+using Sample.iOS;
 using UIKit;
 
 namespace Blank
@@ -8,6 +10,12 @@ namespace Blank
     [Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
+        /// <summary>
+        /// In real application provide dependencies from core project with Dependency Injection or Dependency Container.
+        /// Im keeping it simple for the sake of this sample.
+        /// </summary>
+        public static readonly ISampleViewModel SampleViewModel = new SampleViewModel();
+
         // class-level declarations
 
         public override UIWindow Window
@@ -18,11 +26,13 @@ namespace Blank
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            // create a new window instance based on the screen size
-            Window = new UIWindow(UIScreen.MainScreen.Bounds);
-            Window.RootViewController = new UIViewController();
+            var storyboard = UIStoryboard.FromName("MainStoryboard", null);
+            var viewController = storyboard.InstantiateInitialViewController() as SampleViewController;
 
-            // make the window visible
+            Window = new UIWindow(UIScreen.MainScreen.Bounds)
+            {
+                RootViewController = viewController
+            };
             Window.MakeKeyAndVisible();
 
             return true;
