@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.com/jakdor/CrossPlatformLiveData.svg?token=9z6ECote9yoBZxM4Xvob&branch=master)](https://travis-ci.com/jakdor/CrossPlatformLiveData)
 
 CrossPlatformLiveData is a C# library inspired by Android Jetpack LiveData, intended for platform independent use with Xamarin and other cross platform frameworks.
+
 CrossPlatformLiveData is a light weight solution to effective implementation of MVVM architecture pattern.
 
 Features:
@@ -20,12 +21,10 @@ Installation
 - Android project - add CrossPlatformLiveData, CrossPlatformLiveData.Android nuggets,
 - iOS project - add CrossPlatformLiveData, CrossPlatformLiveData.iOS nuggets
 
-CrossPlatformLiveData.Android provides base UI classes with LifecycleManger linked to lifecycle events:
-
+CrossPlatformLiveData.Android provides base UI classes with LifecycleManger linked to lifecycle events:\
 **LiveDataActivity, LiveDataAppCompatActivity, LiveDataAppCompatDialogFragment, LiveDataFragment, LiveDataFragmentActivity, LiveDataSupportDialogFragment, LiveDataSupportFragment**
 
-CrossPlatformLiveData.iOS provides base UI classes with LifecycleManger linked to lifecycle events:
-
+CrossPlatformLiveData.iOS provides base UI classes with LifecycleManger linked to lifecycle events:\
 **LiveDataViewController**
 
 For other platforms all you need to do is provide LifecycleManger with lifecyle events when they occur, implementation should be self explanatory.
