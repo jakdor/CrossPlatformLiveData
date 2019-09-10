@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using System;
+using Foundation;
 using UIKit;
 
 namespace CrossPlatformLiveData.iOS
@@ -13,6 +14,10 @@ namespace CrossPlatformLiveData.iOS
         private NSObject _foregroundNotificationObserver;
         private NSObject _backgroundNotificationObserver;
         private bool _isCurrentlyVisible;
+
+        public LiveDataViewController(IntPtr handle) : base(handle)
+        {
+        }
 
         public override void ViewWillAppear(bool animated)
         {
