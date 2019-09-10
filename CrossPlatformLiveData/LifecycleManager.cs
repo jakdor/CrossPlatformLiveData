@@ -74,7 +74,7 @@ namespace CrossPlatformLiveData
         {
             foreach (var sub in _subscriptions)
             {
-                var typedSub = DynamicCast(sub, sub.Type);
+                dynamic typedSub = Convert.ChangeType(sub, sub.Type);
                 ReAdd(typedSub.LiveData, typedSub.OnNext, typedSub.OnError, typedSub.Id);
             }
         }
@@ -95,7 +95,7 @@ namespace CrossPlatformLiveData
         {
             foreach (var sub in _subscriptions)
             {
-                var typedSub = DynamicCast(sub, sub.Type);
+                dynamic typedSub = Convert.ChangeType(sub, sub.Type);
                 typedSub.LiveData.InvalidateLastPostedValue();
             }
             _subscriptions.Clear();
@@ -110,7 +110,5 @@ namespace CrossPlatformLiveData
             if (_subscriptions.Any()) _subscriptions.Clear();
             if (!_disposable.IsDisposed) _disposable.Dispose();
         }
-
-        private static dynamic DynamicCast(dynamic obj, Type castTo) => Convert.ChangeType(obj, castTo);
     }
 }
