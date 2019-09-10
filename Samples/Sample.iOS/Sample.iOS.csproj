@@ -68,6 +68,11 @@
     <Content Include="Entitlements.plist" />
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
     <None Include="packages.config" />
+    <InterfaceDefinition Include="MainStoryboard.storyboard" />
+    <Compile Include="SampleViewController.cs" />
+    <Compile Include="SampleViewController.designer.cs">
+      <DependentUpon>SampleViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CrossPlatformLiveData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
