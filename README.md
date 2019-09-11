@@ -1,7 +1,7 @@
 # CrossPlatformLiveData
 ### Android LiveData inspired .NET implementation - lifecycle aware rx streams
 
-[![Build Status](https://travis-ci.com/jakdor/CrossPlatformLiveData.svg?token=9z6ECote9yoBZxM4Xvob&branch=master)](https://travis-ci.com/jakdor/CrossPlatformLiveData)
+[![Build Status](https://travis-ci.com/jakdor/CrossPlatformLiveData.svg?branch=master)](https://travis-ci.com/jakdor/CrossPlatformLiveData)
 
 CrossPlatformLiveData is a C# library inspired by Android Jetpack LiveData, intended for platform independent use with Xamarin and other cross platform frameworks.
 
@@ -12,7 +12,7 @@ Features:
 * Last value cache - state preservation,
 * Everything that you need to implement MVVM pattern
 
-![CrossPlatformLiveData - MVVM pattern](https://raw.github.com/jakdor/CrossPlatformLiveData/tree/master/img/mvvm.png)
+![CrossPlatformLiveData - MVVM pattern](https://i.imgur.com/JxfRZdM.png)
 
 Installation
 ------
@@ -93,3 +93,7 @@ private void OnNextNetworkingData(RxWrapper<SampleResponse> response)
 	}
 }
 ```
+
+------
+
+![TMS logo](https://i.imgur.com/6o5OQqZ.png)
