@@ -17,6 +17,10 @@
     <PackageTags>LiveData, Rx, MVVM, Xamarin, Android, iOS</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>F:\CrossPlatformLiveData\CrossPlatformLiveData\bin\CrossPlatformLiveData.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="System.Reactive" Version="4.0.0" />
