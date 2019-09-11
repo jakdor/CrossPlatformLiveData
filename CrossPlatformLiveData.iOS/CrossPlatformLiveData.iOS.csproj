@@ -32,8 +32,8 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CrossPlatformLiveData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrossPlatformLiveData.1.0.0\lib\netstandard2.0\CrossPlatformLiveData.dll</HintPath>
+    <Reference Include="CrossPlatformLiveData, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrossPlatformLiveData.1.0.1\lib\netstandard2.0\CrossPlatformLiveData.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
