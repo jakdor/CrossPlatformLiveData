@@ -18,14 +18,14 @@ Features:
 Installation
 ------
 
-- [![Nuget](https://img.shields.io/nuget/v/CrossPlatformLiveData)](https://www.nuget.org/packages/CrossPlatformLiveData/) Core/Logic project - add CrossPlatformLiveData nuget,
-- [![Nuget](https://img.shields.io/nuget/v/CrossPlatformLiveData.Android)](https://www.nuget.org/packages/CrossPlatformLiveData.Android/) Android project - add CrossPlatformLiveData, CrossPlatformLiveData.Android nuggets,
-- [![Nuget](https://img.shields.io/nuget/v/CrossPlatformLiveData.iOS)](https://www.nuget.org/packages/CrossPlatformLiveData.iOS/) iOS project - add CrossPlatformLiveData, CrossPlatformLiveData.iOS nuggets
+- [![Nuget](https://img.shields.io/nuget/v/CrossPlatformLiveData)](https://www.nuget.org/packages/CrossPlatformLiveData/) Core/Logic project - add [CrossPlatformLiveData](https://www.nuget.org/packages/CrossPlatformLiveData/) nuget,
+- [![Nuget](https://img.shields.io/nuget/v/CrossPlatformLiveData.Android)](https://www.nuget.org/packages/CrossPlatformLiveData.Android/) Android project - add [CrossPlatformLiveData](https://www.nuget.org/packages/CrossPlatformLiveData/), [CrossPlatformLiveData.Android](https://www.nuget.org/packages/CrossPlatformLiveData.Android/) nuggets,
+- [![Nuget](https://img.shields.io/nuget/v/CrossPlatformLiveData.iOS)](https://www.nuget.org/packages/CrossPlatformLiveData.iOS/) iOS project - add [CrossPlatformLiveData](https://www.nuget.org/packages/CrossPlatformLiveData/), [CrossPlatformLiveData.iOS](https://www.nuget.org/packages/CrossPlatformLiveData.iOS/) nuggets
 
-CrossPlatformLiveData.Android provides base UI classes with LifecycleManger linked to lifecycle events:\
+[CrossPlatformLiveData.Android](https://www.nuget.org/packages/CrossPlatformLiveData.Android/) provides base UI classes with LifecycleManger linked to lifecycle events:\
 **LiveDataActivity, LiveDataAppCompatActivity, LiveDataAppCompatDialogFragment, LiveDataFragment, LiveDataFragmentActivity, LiveDataSupportDialogFragment, LiveDataSupportFragment**
 
-CrossPlatformLiveData.iOS provides base UI classes with LifecycleManger linked to lifecycle events:\
+[CrossPlatformLiveData.iOS](https://www.nuget.org/packages/CrossPlatformLiveData.iOS/) provides base UI classes with LifecycleManger linked to lifecycle events:\
 **LiveDataViewController**
 
 For other platforms all you need to do is provide LifecycleManger with lifecyle events when they occur, implementation should be self explanatory.
@@ -96,5 +96,5 @@ private void OnNextNetworkingData(RxWrapper<SampleResponse> response)
 ```
 
 ------
-
+2019 © TMS
 [![TMS logo](https://i.imgur.com/6o5OQqZ.png)](http://tmssoft.pl/)
