@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>CrossPlatformLiveData.Android</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>CrossPlatformLiveData.Android</title>
     <authors>Jakub Dorda</authors>
     <owners>Jakub Dorda</owners>
@@ -24,6 +24,6 @@
     </dependencies>
   </metadata>
   <files>
-   <file src="bin\Release\CrossPlatformLiveData.Android.dll"  target="lib\monoandroid81" ></file>
+   <file src="bin\Release\CrossPlatformLiveData.Android.dll"  target="lib\monoandroid90" ></file>
   </files>
 </package>
