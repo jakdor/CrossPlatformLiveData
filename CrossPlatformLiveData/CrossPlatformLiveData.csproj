@@ -11,9 +11,9 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/jakdor/CrossPlatformLiveData/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jakdor/CrossPlatformLiveData</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jakdor/CrossPlatformLiveData</RepositoryUrl>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2</Version>
     <PackageTags>LiveData, Rx, MVVM, Xamarin, Android, iOS</PackageTags>
   </PropertyGroup>
 
