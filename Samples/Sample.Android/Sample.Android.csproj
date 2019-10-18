@@ -95,10 +95,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CrossPlatformLiveData">
-      <Version>1.0.1</Version>
+      <Version>1.0.2</Version>
     </PackageReference>
     <PackageReference Include="CrossPlatformLiveData.Android">
-      <Version>1.0.2</Version>
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Constraint.Layout">
       <Version>1.1.2</Version>
@@ -106,7 +106,7 @@
     <PackageReference Include="Xamarin.Android.Support.Constraint.Layout.Solver">
       <Version>1.1.2</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_sample.axml">
