@@ -50,19 +50,22 @@ namespace Sample.Android
 
             if (Activity is ISampleFragmentContract activity)
             {
-                _viewModel = activity.GetSampleViewModel();
+                if(_viewModel == null)
+                {
+                    _viewModel = activity.GetSampleViewModel();
+
+                    //Observe LiveData streams with LifecycleManager
+                    _viewModel?.ClockLiveData.Observe(
+                        LifecycleManager, OnNextClockData, e => Log.Error("SampleFragment", e.ToString()));
+
+                    _viewModel?.FakeNetworkingLiveData.Observe(
+                        LifecycleManager, OnNextNetworkData, e => Log.Error("SampleFragment", e.ToString()));
+                }
             }
             else
             {
                 throw new Exception("Activity not implementing ISampleFragmentContract");
             }
-
-            //Observe LiveData streams with LifecycleManager
-            _viewModel?.ClockLiveData.Observe(
-                LifecycleManager, OnNextClockData, e => Log.Error("SampleFragment", e.ToString()));
-
-            _viewModel?.FakeNetworkingLiveData.Observe(
-                LifecycleManager, OnNextNetworkData, e => Log.Error("SampleFragment", e.ToString()));
         }
 
         /// <summary>
