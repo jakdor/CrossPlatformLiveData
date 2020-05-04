@@ -21,12 +21,6 @@ namespace CrossPlatformLiveData.Android
             LifecycleManager.OnPause();
         }
 
-        protected override void OnStop()
-        {
-            base.OnStop();
-            LifecycleManager.OnDestroyView();
-        }
-
         protected override void OnDestroy()
         {
             base.OnDestroy();
