@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.com/jakdor/CrossPlatformLiveData.svg?branch=master)](https://travis-ci.com/jakdor/CrossPlatformLiveData)
 [![Nuget](https://img.shields.io/nuget/v/CrossPlatformLiveData)](https://www.nuget.org/packages/CrossPlatformLiveData/)
 
+[Medium article about CrossPlatformLiveData](https://medium.com/@jakdor00/crossplatformlivedata-xamarin-lightweight-mvvm-library-280ab2857bec)
+
 CrossPlatformLiveData is a C# library inspired by Android Jetpack LiveData, intended for platform independent use with Xamarin and other cross platform frameworks.
 
 CrossPlatformLiveData is a light weight solution to effective implementation of MVVM architecture pattern.
