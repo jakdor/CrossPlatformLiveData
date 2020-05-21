@@ -15,6 +15,10 @@ namespace CrossPlatformLiveData.iOS
         private NSObject _backgroundNotificationObserver;
         private bool _isCurrentlyVisible;
 
+        public LiveDataViewController()
+        {
+        }
+
         public LiveDataViewController(IntPtr handle) : base(handle)
         {
         }

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>CrossPlatformLiveData.iOS</id>
-    <version>1.0.2</version>
+    <version>1.0.5</version>
     <title>CrossPlatformLiveData.iOS</title>
     <authors>Jakub Dorda</authors>
     <owners>Jakub Dorda</owners>
@@ -10,7 +10,7 @@
 	<licenseUrl>https://raw.githubusercontent.com/jakdor/CrossPlatformLiveData/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/jakdor/CrossPlatformLiveData</projectUrl>
     <description>Base iOS classes for CrossPlatformLiveData</description>
-    <copyright>2019 © TMS</copyright>
+    <copyright>2020 © TMS</copyright>
     <tags>LiveData, Rx, MVVM, Xamarin, Android</tags>
     <language></language>
     <dependencies>
