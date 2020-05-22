@@ -48,8 +48,14 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LiveDataNavigationController.cs" />
+    <Compile Include="LiveDataPageViewController.cs" />
+    <Compile Include="LiveDataSplitViewController.cs" />
+    <Compile Include="LiveDataTabBarController.cs" />
+    <Compile Include="LiveDataTableViewController.cs" />
     <Compile Include="LiveDataViewController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LiveDataCollectionViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
