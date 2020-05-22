@@ -101,4 +101,4 @@ private void OnNextNetworkingData(RxWrapper<SampleResponse> response)
 
 [![TMS logo](https://i.imgur.com/6o5OQqZ.png)](http://tmssoft.pl/)
 
-2019 © TMS
+2020 © TMS
